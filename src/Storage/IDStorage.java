@@ -6,6 +6,7 @@ public class IDStorage {
     private static ArrayList<String> CUSTOMERIDS = new ArrayList<>();
     private static ArrayList<String> ORDERIDS = new ArrayList<>();
     private static ArrayList<String> ITEMIDS = new ArrayList<>();
+    private static ArrayList<String> CARDNUMBERS = new ArrayList<>();
 
     //=================================================================
     // CustomerID
@@ -58,6 +59,24 @@ public class IDStorage {
 
     public static void removeItemId(String identification){
         ITEMIDS.remove(identification);
+        System.out.println("Item identification was removed from IDStorage");
+    }
+
+    //=================================================================
+    // CardNumber
+    public static boolean cardNumberAlreadyExist(String cardNumber){
+        return CARDNUMBERS.contains(cardNumber);
+    }
+
+    public static void addCardNumber(String cardNumber){
+        if(!CARDNUMBERS.contains(cardNumber)){
+            CARDNUMBERS.add(cardNumber);
+            System.out.println("item identification was added to IDStorage");
+        }
+    }
+
+    public static void removeCardNumber(String cardNumber){
+        CARDNUMBERS.remove(cardNumber);
         System.out.println("Item identification was removed from IDStorage");
     }
 }

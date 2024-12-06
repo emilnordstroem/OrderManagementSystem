@@ -27,7 +27,7 @@ public class Order {
         this.expectedDeliveryDate = calculateExpectedDeliveryDate();
     }
 
-    protected String generateID(){
+    private String generateID(){
         String id = String.valueOf(new Random().nextInt(111_111, 999_999) + 1);
         while(IDStorage.orderIdentificationAlreadyExist(id)){
             id = String.valueOf(new Random().nextInt(111_111, 999_999) + 1);
@@ -44,12 +44,16 @@ public class Order {
         return orderStatus;
     }
 
-    protected double calculateTotalPrice(ArrayList<Item> orderedItems){
+    private double calculateTotalPrice(ArrayList<Item> orderedItems){
         double result = 0;
         for(Item item : orderedItems){
             result += item.getPrice();
         }
         return result;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     private LocalDate calculateExpectedDeliveryDate(){

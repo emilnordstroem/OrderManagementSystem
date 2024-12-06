@@ -26,7 +26,7 @@ public class Customer {
         this.payment = payment;
     }
 
-    protected String generateID(){
+    private String generateID(){
         String id = String.valueOf(new Random().nextInt(111, 999) + 1);
         while(IDStorage.customerIdentificationAlreadyExist(id)){
             id = String.valueOf(new Random().nextInt(111, 999) + 1);
@@ -35,7 +35,11 @@ public class Customer {
         return id;
     }
 
-    protected CustomerStatus activateCustomerAccount(){
+    public ArrayList<Order> getOrders() {
+        return new ArrayList<>(orders);
+    }
+
+    private CustomerStatus activateCustomerAccount(){
         return CustomerStatus.ACTIVE;
     }
 
@@ -58,11 +62,20 @@ public class Customer {
         return customerStatus;
     }
 
+    public void addOrder(Order order){
+        System.out.printf("%s added to Customers list of orders", order.getId());
+        orders.add(order);
+    }
+
     public String getId() {
         return id;
     }
 
     public String getFullName(){
         return String.format("%s %s", firstName, lastName);
+    }
+
+    public Address getAddress() {
+        return address;
     }
 }

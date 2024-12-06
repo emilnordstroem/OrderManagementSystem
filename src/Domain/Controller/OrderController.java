@@ -2,16 +2,17 @@ package Domain.Controller;
 
 import Domain.Models.*;
 import Storage.IDStorage;
-import Storage.ItemStorage;
 import Storage.OrderStorage;
 import java.util.ArrayList;
 
 public class OrderController {
 
-    public static void createOrder(Customer customer, ArrayList<Item> items, Address deliveryAddress){
+    public static Order createOrder(Customer customer, ArrayList<Item> items, Address deliveryAddress){
         System.out.println("createOrder() called in OrderController...");
         Order order = new Order(customer, items, deliveryAddress);
         OrderStorage.addOrder(order);
+        customer.addOrder(order);
+        return order;
     }
 
     public static void orderUpdatedCancelled(Order order){

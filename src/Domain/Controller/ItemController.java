@@ -6,10 +6,11 @@ import Storage.ItemStorage;
 
 public class ItemController {
 
-    public static void createItem(String name, String description, double price){
+    public static Item createItem(String name, String description, double price){
         System.out.println("createItem() called in ItemController...");
         Item item = new Item(name, description, price);
         ItemStorage.addItem(item);
+        return item;
     }
 
     public static void removeItem(Item item){
