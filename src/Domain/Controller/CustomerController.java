@@ -23,17 +23,21 @@ public class CustomerController {
     }
 
     private static void reactivateCustomerAccount(Customer customer){
-        System.out.println("reactiveCustomerAccount() called in CustomerController...");
-        customer.reactivateCustomerAccount();
-        System.out.println("updateCustomerStorage() called in CustomerController...");
-        CustomerStorage.updateCustomerStorage(customer);
+        System.out.println("reactivateCustomerAccount() called in CustomerController...");
+        if(customer.getCustomerStatus().equals(CustomerStatus.INACTIVE)){
+            customer.reactivateCustomerAccount();
+            System.out.println("updateCustomerStorage() called in CustomerController...");
+            CustomerStorage.updateCustomerStorage(customer);
+        }
     }
 
     private static void closeCustomerAccount(Customer customer){
         System.out.println("closeCustomerAccount() called in CustomerController...");
-        customer.closeCustomerAccount();
-        System.out.println("updateCustomerStorage() called in CustomerController...");
-        CustomerStorage.updateCustomerStorage(customer);
+        if(customer.getCustomerStatus().equals(CustomerStatus.INACTIVE)){
+            customer.closeCustomerAccount();
+            System.out.println("updateCustomerStorage() called in CustomerController...");
+            CustomerStorage.updateCustomerStorage(customer);
+        }
     }
 
     private static void removeCustomer(Customer customer){

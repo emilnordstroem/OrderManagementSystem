@@ -39,25 +39,19 @@ public class Customer {
         return CustomerStatus.ACTIVE;
     }
 
-    public void inactiveCustomerAccount(){
-        if(customerStatus.equals(CustomerStatus.ACTIVE)){
-            this.customerStatus = CustomerStatus.INACTIVE;
-            System.out.println("Customer is now inactive");
-        }
+    public void inactiveCustomerAccount() {
+        this.customerStatus = CustomerStatus.INACTIVE;
+        System.out.println("Customer is now inactive");
     }
 
     public void reactivateCustomerAccount(){
-        if(customerStatus.equals(CustomerStatus.INACTIVE)){
-            this.customerStatus = CustomerStatus.ACTIVE;
-            System.out.println("Customer is now reactivated");
-        }
+        this.customerStatus = CustomerStatus.ACTIVE;
+        System.out.println("Customer is now reactivated");
     }
 
     public void closeCustomerAccount(){
-        if(customerStatus.equals(CustomerStatus.INACTIVE)){
-            this.customerStatus = CustomerStatus.CLOSED;
-            System.out.println("Customer is now closed");
-        }
+        this.customerStatus = CustomerStatus.CLOSED;
+        System.out.println("Customer is now closed");
     }
 
     public CustomerStatus getCustomerStatus() {
