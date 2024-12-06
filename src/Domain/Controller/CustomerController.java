@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public class CustomerController {
 
-    public static Customer createCustomer(String firstName, String lastName, LocalDate dateOfBirth, Address address, Payment payment){
+    public static Customer createCustomer(String firstName, String lastName, String phoneNo, String email, LocalDate dateOfBirth, Address address, Payment payment){
         System.out.println("createCustomer() called in CustomerController...");
-        Customer customer = new Customer(firstName, lastName, dateOfBirth, address, payment);
+        Customer customer = new Customer(firstName, lastName, phoneNo, email, dateOfBirth, address, payment);
         CustomerStorage.addCustomer(customer);
         return customer;
     }

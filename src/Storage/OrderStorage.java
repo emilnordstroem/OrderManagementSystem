@@ -33,4 +33,7 @@ public class OrderStorage {
         }
     }
 
+    public static ArrayList<Order> getORDERS(){
+        return new ArrayList<>(ORDERS);
+    }
 }

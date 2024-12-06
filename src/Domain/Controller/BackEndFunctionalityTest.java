@@ -12,7 +12,7 @@ public class BackEndFunctionalityTest {
         //==============================================================
         Address address = new Address("streetName", "buildingNo", "postalCode", "city", "country");
         Payment creditCard = new Payment("First Name", "123456789");
-        Customer testCustomer = CustomerController.createCustomer("First", "LastName", LocalDate.of(2002, 12,13), address, creditCard);
+        Customer testCustomer = CustomerController.createCustomer("First", "LastName", "12345678", "example@email.com",LocalDate.of(2002, 12,13), address, creditCard);
         //==============================================================
         System.out.println("//==============================================================");
         System.out.println(testCustomer.getCustomerStatus());

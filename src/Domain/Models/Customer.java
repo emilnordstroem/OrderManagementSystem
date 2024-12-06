@@ -11,16 +11,20 @@ public class Customer {
     private CustomerStatus customerStatus;
     private String firstName;
     private String lastName;
+    private String phoneNo;
+    private String email;
     private LocalDate dateOfBirth;
     private Address address;
     private final ArrayList<Order> orders = new ArrayList<>();
     private Payment payment;
 
-    public Customer(String firstName, String lastName, LocalDate dateOfBirth, Address address, Payment payment) {
+    public Customer(String firstName, String lastName, String phoneNo, String email, LocalDate dateOfBirth, Address address, Payment payment) {
         this.id = generateID();
         this.customerStatus = activateCustomerAccount();
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNo = phoneNo;
+        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.payment = payment;

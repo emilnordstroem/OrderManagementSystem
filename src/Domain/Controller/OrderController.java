@@ -60,4 +60,8 @@ public class OrderController {
         OrderStorage.removeOrder(order);
         IDStorage.removeOrderId(order.getId());
     }
+
+    public static ArrayList<Order> getOrders(){
+        return OrderStorage.getORDERS();
+    }
 }
