@@ -135,7 +135,15 @@ public class OverviewPane extends GridPane {
     }
 
     private void setOrderSelectionFunctionality(){
-
+        orderOverviewTableView.setRowFactory(event -> {
+            TableRow<Order> row = new TableRow<>();
+            row.setOnMouseClicked(event1 -> {
+                if (event1.getClickCount() == 2 && (! row.isEmpty())) {
+                    new OrderDetailsWindow(row.getItem()).showAndWait();
+                }
+            });
+            return row;
+        });
     }
 
     // Helper method for search
