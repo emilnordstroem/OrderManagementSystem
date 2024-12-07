@@ -2,8 +2,6 @@ package Domain.Controller;
 
 import Domain.Models.*;
 import Storage.CustomerStorage;
-
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 

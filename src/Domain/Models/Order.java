@@ -41,7 +41,7 @@ public class Order {
     }
 
     public OrderStatus getOrderStatus() {
-        return orderStatus;
+        return this.orderStatus;
     }
 
     private double calculateTotalPrice(ArrayList<Item> orderedItems){
@@ -54,6 +54,22 @@ public class Order {
 
     public double getPrice() {
         return price;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public LocalDate getPlacementDate() {
+        return placementDate;
+    }
+
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public LocalDate getExpectedDeliveryDate() {
+        return expectedDeliveryDate;
     }
 
     private LocalDate calculateExpectedDeliveryDate(){

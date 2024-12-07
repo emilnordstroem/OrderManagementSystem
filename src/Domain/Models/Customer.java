@@ -75,6 +75,22 @@ public class Customer {
         return id;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public String getFullName(){
         return String.format("%s %s", firstName, lastName);
     }

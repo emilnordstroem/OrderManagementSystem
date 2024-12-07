@@ -14,4 +14,9 @@ public class Address {
         this.city = city;
         this.country = country;
     }
+
+    @Override
+    public String toString(){
+        return String.format("%s %s, %s %s, %s",streetName, buildingNo, city, postalCode, country);
+    }
 }
