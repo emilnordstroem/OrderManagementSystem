@@ -34,6 +34,10 @@ public class Item {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public double getPrice() {
         return price;
     }

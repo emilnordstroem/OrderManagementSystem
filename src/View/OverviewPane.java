@@ -85,9 +85,9 @@ public class OverviewPane extends GridPane {
         orderOverviewTableView.setItems(orderObservableList);
         orderOverviewTableView.getColumns().addAll(orderId, orderStatus, customerFullName, deliveryAddress, placementDate, estimatedDeliveryDate);
 
-        VBox vbox = new VBox(orderOverviewTableView);
-
-        this.add(vbox, 0,1);
+        // Research why there is a dublicated Children error when VBox is not implementet??
+        VBox vBox = new VBox(orderOverviewTableView);
+        this.add(vBox, 0,1);
     }
 
     private void setButtonFunctionality(){
@@ -103,8 +103,8 @@ public class OverviewPane extends GridPane {
                     break;
                 } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 1){
                     String fullName = inputTextField.getText();
-                    ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByFullName();
-                    targetOrderArrayList = SearchAlgorithm.searchOrderByFullName(sortedOrderArrayList, fullName);
+                    ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByName();
+                    targetOrderArrayList = SearchAlgorithm.searchOrderByName(sortedOrderArrayList, fullName);
                     break;
                 } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 2){
                     String phoneNumber = inputTextField.getText();

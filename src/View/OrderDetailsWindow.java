@@ -41,8 +41,10 @@ public class OrderDetailsWindow extends Stage {
         orderInfoGridPane.add(statusLabel, 0,1);
         orderInfoGridPane.add(orderStatusTextField, 1,1);
         Label netValueLabel = new Label("Net value");
+        Label netValueCurrencyLabel = new Label("DKK");
         orderInfoGridPane.add(netValueLabel, 2,0);
         orderInfoGridPane.add(orderNetValueTextField, 3,0);
+        orderInfoGridPane.add(netValueCurrencyLabel, 4,0);
         Label placementDateLabel = new Label("Registration date");
         orderInfoGridPane.add(placementDateLabel, 0,2);
         orderInfoGridPane.add(orderDateTextField, 1,2);
@@ -69,11 +71,11 @@ public class OrderDetailsWindow extends Stage {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE); // Not possible to close tabs
 
         Tab tabItemOverview = new Tab("Items");
-        tabPane.getTabs().add(tabItemOverview);
         tabItemOverview.setContent(new OrderItemOverviewPane(selectedOrder));
+        tabPane.getTabs().add(tabItemOverview);
 
         Tab tabShippingOverview = new Tab("Shipping");
+        tabShippingOverview.setContent(new OrderShippingOverviewPane(selectedOrder));
         tabPane.getTabs().add(tabShippingOverview);
-        tabItemOverview.setContent(new OrderShippingOverviewPane(selectedOrder));
     }
 }

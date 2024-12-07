@@ -50,7 +50,7 @@ public class SearchAlgorithm {
 
     //====================================================================
     // Sorted arrayList by Full Name : bubble sort
-    public static ArrayList<Order> sortedOrderArrayListByFullName() {
+    public static ArrayList<Order> sortedOrderArrayListByName() {
         ArrayList<Order> orderArrayList = OrderStorage.getORDERS();
         if(!orderArrayList.isEmpty()) {
             for (int outerIndex = 0; outerIndex < orderArrayList.size() - 1; outerIndex++) {
@@ -70,11 +70,28 @@ public class SearchAlgorithm {
         System.out.println("OrderStorage.getORDERS() is empty -> returning null");
         return null;
     }
-    // Binary Search Algorithm: Full Name
-    public static ArrayList<Order> searchOrderByFullName(ArrayList<Order> sortedOrderArrayList, String target){
+    // Binary Search Algorithm: By name (diversed to searchByFullName + searchByFirstName)
+    public static ArrayList<Order> searchOrderByName(ArrayList<Order> sortedOrderArrayList, String target){
+        ArrayList<Order> resultArrayList;
+        if(target.contains(" ")){
+            resultArrayList = searchByFullName(sortedOrderArrayList, target);
+        } else {
+            resultArrayList = searchByFirstName(sortedOrderArrayList, target);
+        }
+
+        System.out.println("searchOrderByName() returned");
+        for(Order order : resultArrayList){
+            System.out.println(order.getCustomer().getFullName());
+        }
+        return resultArrayList;
+    }
+
+    // Method for fullNameSearch
+    private static ArrayList<Order> searchByFullName(ArrayList<Order> sortedOrderArrayList, String target){
         ArrayList<Order> resultArrayList = new ArrayList<>();
         int left = 0;
         int right = sortedOrderArrayList.size();
+
         while(left <= right){
             int middle = (left + right) / 2;
             Order candidateOrder = sortedOrderArrayList.get(middle);
@@ -107,10 +124,48 @@ public class SearchAlgorithm {
                 left = middle + 1;
             }
         }
-        System.out.println("searchOrderByFullName() returned");
-        for(Order order : resultArrayList){
-            System.out.println(order.getCustomer().getFullName());
+        System.out.println("searchByFullName() returned");
+        return resultArrayList;
+    }
+    // Method for search by First name
+    private static ArrayList<Order> searchByFirstName(ArrayList<Order> sortedOrderArrayList, String target){
+        ArrayList<Order> resultArrayList = new ArrayList<>();
+        int left = 0;
+        int right = sortedOrderArrayList.size();
+
+        while(left <= right){
+            int middle = (left + right) / 2;
+            Order candidateOrder = sortedOrderArrayList.get(middle);
+            String candidateFirstName = candidateOrder.getCustomer().getFirstName();
+            if(candidateFirstName.compareTo(target) == 0){
+                System.out.println("Target found and added to list...");
+                resultArrayList.add(candidateOrder);
+                for(int index = middle + 1; index < right; index++){
+                    System.out.print("Searching further to the right...");
+                    candidateOrder = sortedOrderArrayList.get(index);
+                    candidateFirstName = candidateOrder.getCustomer().getFirstName();
+                    if(candidateFirstName.compareTo(target) == 0){
+                        System.out.println("Order added to list");
+                        resultArrayList.add(candidateOrder);
+                    }
+                }
+                for(int index = middle - 1; index > left; index--){
+                    System.out.print("Searching further to the left...");
+                    candidateOrder = sortedOrderArrayList.get(index);
+                    candidateFirstName = candidateOrder.getCustomer().getFirstName();
+                    if(candidateFirstName.compareTo(target) == 0){
+                        System.out.println("Order added to list");
+                        resultArrayList.add(candidateOrder);
+                    }
+                }
+                break;
+            } else if (candidateFirstName.compareTo(target) > 0){
+                right = middle - 1;
+            } else {
+                left = middle + 1;
+            }
         }
+        System.out.println("searchByFirstName() returned");
         return resultArrayList;
     }
 

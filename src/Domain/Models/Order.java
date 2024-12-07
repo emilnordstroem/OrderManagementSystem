@@ -68,6 +68,10 @@ public class Order {
         return deliveryAddress;
     }
 
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
     public LocalDate getExpectedDeliveryDate() {
         return expectedDeliveryDate;
     }
