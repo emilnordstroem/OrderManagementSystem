@@ -22,9 +22,6 @@ public class MainWindow extends Application {
         TabPane tabPane = new TabPane();
         this.innerTabPane(tabPane);
         pane.setCenter(tabPane);
-
-        elementLayout();
-        elementContents();
     }
 
     private void innerTabPane(TabPane tabPane){
@@ -32,13 +29,5 @@ public class MainWindow extends Application {
         Tab tabOverview = new Tab("overview"); // Application overview
         tabPane.getTabs().add(tabOverview);
         tabOverview.setContent(new OrderOverviewPane());
-    }
-
-    private void elementLayout(){
-
-    }
-
-    private void elementContents() {
-
     }
 }

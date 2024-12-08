@@ -39,7 +39,7 @@ public class OrderDetailsWindow extends Stage {
         orderElementContents();
         tabPaneContent();
         buttonFunctionalty();
-        pane.setGridLinesVisible(true);
+        pane.setGridLinesVisible(false);
     }
 
     private void elementLayout(GridPane pane){

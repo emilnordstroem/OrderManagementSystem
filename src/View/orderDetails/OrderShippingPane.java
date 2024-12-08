@@ -8,19 +8,23 @@ import javafx.scene.layout.GridPane;
 public class OrderShippingPane extends GridPane {
     private final Order selectedOrder;
 
-    // Shipping information overview
+    // Receiver information overview
     private final TextField orderCustomerFullName = new TextField();
     private final TextField orderCustomerPhoneNumber = new TextField();
     private final TextField orderCustomerEmail = new TextField();
+    // Delivery information overview
     private final TextField orderDeliveryAdresse = new TextField();
     private final TextField orderDeliveryPostalCode = new TextField();
     private final TextField orderDeliveryCity = new TextField();
     private final TextField orderDeliveryCountry = new TextField();
+    // Shipping date overview
+    private final TextField orderPlacementDateTextField = new TextField();
+    private final TextField orderExpDeliveryDateTextField = new TextField();
 
     public OrderShippingPane(Order order) {
         this.selectedOrder = order;
         innerContent();
-        this.setGridLinesVisible(true);
+        this.setGridLinesVisible(false);
     }
 
     private void innerContent(){
@@ -29,48 +33,59 @@ public class OrderShippingPane extends GridPane {
     }
 
     private void elementLayout(){
-        GridPane customerInformationPane = new GridPane();
+        GridPane receiverInformationPane = new GridPane();
         Label customerInformationLabel = new Label("Receiver information");
-        customerInformationPane.add(customerInformationLabel, 0,0);
+        receiverInformationPane.add(customerInformationLabel, 0,0);
         Label fullNameLabel = new Label("Full name");
-        customerInformationPane.add(fullNameLabel, 0,1);
-        customerInformationPane.add(orderCustomerFullName, 1,1);
+        receiverInformationPane.add(fullNameLabel, 0,1);
+        receiverInformationPane.add(orderCustomerFullName, 1,1);
         Label phoneNumber = new Label("Phone number");
-        customerInformationPane.add(phoneNumber, 0,2);
-        customerInformationPane.add(orderCustomerPhoneNumber, 1,2);
+        receiverInformationPane.add(phoneNumber, 0,2);
+        receiverInformationPane.add(orderCustomerPhoneNumber, 1,2);
         Label email = new Label("Email");
-        customerInformationPane.add(email, 0,3);
-        customerInformationPane.add(orderCustomerEmail, 1,3);
+        receiverInformationPane.add(email, 0,3);
+        receiverInformationPane.add(orderCustomerEmail, 1,3);
 
-        GridPane shippingInformationPane = new GridPane();
+        GridPane deliveryInformationPane = new GridPane();
         Label shippingInformationLabel = new Label("Delivery information");
-        shippingInformationPane.add(shippingInformationLabel, 0,0);
+        deliveryInformationPane.add(shippingInformationLabel, 0,0);
         Label addressLabel = new Label("Address");
-        shippingInformationPane.add(addressLabel, 0,1);
-        shippingInformationPane.add(orderDeliveryAdresse, 1,1);
+        deliveryInformationPane.add(addressLabel, 0,1);
+        deliveryInformationPane.add(orderDeliveryAdresse, 1,1);
         Label postalCodeLabel = new Label("Postal code");
-        shippingInformationPane.add(postalCodeLabel, 0,2);
-        shippingInformationPane.add(orderDeliveryPostalCode, 1,2);
+        deliveryInformationPane.add(postalCodeLabel, 0,2);
+        deliveryInformationPane.add(orderDeliveryPostalCode, 1,2);
         Label cityLabel = new Label("City");
-        shippingInformationPane.add(cityLabel,0,3);
-        shippingInformationPane.add(orderDeliveryCity, 1,3);
+        deliveryInformationPane.add(cityLabel,0,3);
+        deliveryInformationPane.add(orderDeliveryCity, 1,3);
         Label countryLabel = new Label("Country");
-        shippingInformationPane.add(countryLabel, 0,4);
-        shippingInformationPane.add(orderDeliveryCountry, 1,4);
+        deliveryInformationPane.add(countryLabel, 0,4);
+        deliveryInformationPane.add(orderDeliveryCountry, 1,4);
 
-        this.add(customerInformationPane, 0,0);
-        this.add(shippingInformationPane, 0,1);
+        GridPane dateInformationPane = new GridPane();
+        Label shipmentDateInformationLabel = new Label("Shipment date information");
+        dateInformationPane.add(shipmentDateInformationLabel, 0,0);
+        Label orderPlacementDateLabel = new Label("Registration date");
+        dateInformationPane.add(orderPlacementDateLabel, 0,1);
+        dateInformationPane.add(orderPlacementDateTextField, 1,1);
+        Label orderExpDeliveryDateLabel = new Label("Exp. delivery date");
+        dateInformationPane.add(orderExpDeliveryDateLabel, 0,2);
+        dateInformationPane.add(orderExpDeliveryDateTextField, 1,2);
+
+        this.add(receiverInformationPane, 0,0);
+        this.add(deliveryInformationPane, 0,1);
+        this.add(dateInformationPane, 1,0);
     }
 
     private void elementContents(){
-        // Customer information
+        // receiver information
         orderCustomerFullName.setText(selectedOrder.getCustomer().getFullName());
         orderCustomerPhoneNumber.setText(selectedOrder.getCustomer().getPhoneNo());
         orderCustomerEmail.setText(selectedOrder.getCustomer().getEmail());
         orderCustomerFullName.setEditable(false);
         orderCustomerPhoneNumber.setEditable(false);
         orderCustomerEmail.setEditable(false);
-        // Address
+        // Address information
         orderDeliveryAdresse.setText(String.format("%s %s",
                 selectedOrder.getDeliveryAddress().getStreetName(),
                 selectedOrder.getDeliveryAddress().getBuildingNo()
@@ -82,5 +97,8 @@ public class OrderShippingPane extends GridPane {
         orderDeliveryPostalCode.setEditable(false);
         orderDeliveryCity.setEditable(false);
         orderDeliveryCountry.setEditable(false);
+        // shipping date information
+        orderPlacementDateTextField.setText(selectedOrder.getPlacementDate().toString());
+        orderExpDeliveryDateTextField.setText(selectedOrder.getExpectedDeliveryDate().toString());
     }
 }

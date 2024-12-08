@@ -25,7 +25,7 @@ public class OrderItemsPane extends GridPane {
         this.selectedOrder = order;
         setElementLayout();
         setAllItemsTableView();
-        this.setGridLinesVisible(true);
+        this.setGridLinesVisible(false);
     }
 
     private void setElementLayout(){

@@ -41,12 +41,12 @@ public class OrderOverviewPane extends GridPane {
         setOrderOverviewTableView();
         setButtonFunctionality();
         setOrderSelectionFunctionality();
-        this.setGridLinesVisible(true);
+        this.setGridLinesVisible(false);
     }
 
     private void setElementLayout(){
         GridPane pane = new GridPane();
-        pane.setGridLinesVisible(true);
+        pane.setGridLinesVisible(false);
         Label orderIDLabel = new Label("order-id");
         Label customerFullNameLabel = new Label("name");
         Label customerPhoneNumberLabel = new Label("phone number");
