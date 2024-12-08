@@ -27,8 +27,17 @@ public class Payment {
         return id;
     }
 
-    public String getPaymentInfo(){
-        return String.format("Cardholder: %s%nCardnumber: %s", cardHolder, cardNumber);
+    public String getCardHolder(){
+        return cardHolder;
+    }
+
+    public String getCensoredCardNumber(){
+        StringBuilder censoredCardNumber = new StringBuilder();
+        for(int index = cardNumber.length() - 1; index >= (cardNumber.length() - 3); index--){
+            char character = cardNumber.charAt(index);
+            censoredCardNumber.append(character);
+        }
+        return String.format("*** *** %s", censoredCardNumber);
     }
 
 }

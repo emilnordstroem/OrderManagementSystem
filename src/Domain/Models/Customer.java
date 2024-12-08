@@ -98,4 +98,8 @@ public class Customer {
     public Address getAddress() {
         return address;
     }
+
+    public Payment getPayment() {
+        return payment;
+    }
 }

@@ -104,6 +104,10 @@ public class Order {
         this.orderStatus = OrderStatus.DELIVERED;
     }
 
+    public void setOrderStatusReturned(){
+        this.orderStatus = OrderStatus.RETURNED;
+    }
+
     public String getOrderNotation() {
         return orderNotation;
     }

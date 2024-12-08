@@ -5,5 +5,6 @@ public enum OrderStatus {
     CANCELLED,
     PACKED,
     INTRANSIT,
-    DELIVERED
+    DELIVERED,
+    RETURNED
 }

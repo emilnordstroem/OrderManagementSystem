@@ -106,13 +106,17 @@ public class OrderDetailsWindow extends Stage {
         Tab tabShippingOverview = new Tab("Shipping");
         tabShippingOverview.setContent(new OrderShippingPane(selectedOrder));
         tabPane.getTabs().add(tabShippingOverview);
+
+        Tab tabPaymentOverview = new Tab("Payment");
+        tabPaymentOverview.setContent(new OrderPaymentPane(selectedOrder));
+        tabPane.getTabs().add(tabPaymentOverview);
     }
 
     private void buttonFunctionalty(){
         closeButton.setOnAction(event -> hide());
 
         editButton.setOnAction(event -> {
-            if(!selectedOrder.getOrderStatus().equals(OrderStatus.CANCELLED)){
+            if(!(selectedOrder.getOrderStatus().equals(OrderStatus.CANCELLED) || selectedOrder.getOrderStatus().equals(OrderStatus.RETURNED))){
                 System.out.println("Order has not been cancelled");
                 orderStatusComboBox.setDisable(false);
                 orderStatusComboBox.setItems(selectedOrder.getOrderStatusArrayList());
@@ -153,6 +157,9 @@ public class OrderDetailsWindow extends Stage {
                 break;
             case CANCELLED:
                 OrderController.orderUpdatedCancelled(selectedOrder);
+                break;
+            case RETURNED:
+                OrderController.orderUpdatedReturned(selectedOrder);
                 break;
             default:
                 System.out.println("Invalid OrderStatus");

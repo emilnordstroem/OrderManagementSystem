@@ -93,10 +93,14 @@ public class OrderOverviewPane extends GridPane {
     private void setButtonFunctionality(){
 
         searchButton.setOnAction(event -> {
-            ArrayList<Order> targetOrderArrayList = searchButtonAction();
-            ObservableList<Order> targetOrderObservableList = FXCollections.observableArrayList(targetOrderArrayList);
-            orderOverviewTableView.setItems(targetOrderObservableList);
-            targetOrderArrayList.clear();
+            try {
+                ArrayList<Order> targetOrderArrayList = searchButtonAction();
+                ObservableList<Order> targetOrderObservableList = FXCollections.observableArrayList(targetOrderArrayList);
+                orderOverviewTableView.setItems(targetOrderObservableList);
+                targetOrderArrayList.clear();
+            } catch (Exception nullPointerException) {
+                System.out.println("NullPointerException() : Search without input");
+            }
         });
 
         clearButton.setOnAction(event -> {

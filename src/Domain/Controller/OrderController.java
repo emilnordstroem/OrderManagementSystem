@@ -55,6 +55,16 @@ public class OrderController {
         }
     }
 
+    public static void orderUpdatedReturned(Order order){
+        System.out.println("orderUpdatedReturned() called in OrderController...");
+        if(!order.getOrderStatus().equals(OrderStatus.CANCELLED)){
+            System.out.println("setOrderStatusReturned() called in OrderController...");
+            order.setOrderStatusReturned();
+            System.out.println("updateOrderStorage() called in OrderController...");
+            OrderStorage.updateOrderStorage(order);
+        }
+    }
+
     public static void orderUpdatedNotation(Order order, String updatedNotation){
         System.out.println("orderUpdatedNotation() called in OrderController...");
         order.setOrderNotation(updatedNotation);
@@ -68,6 +78,14 @@ public class OrderController {
 
     public static ArrayList<Order> getOrders(){
         return OrderStorage.getORDERS();
+    }
+
+    public static String getPaymentCardHolder(Order order){
+        return order.getCustomer().getPayment().getCardHolder();
+    }
+
+    public static String getPaymentCardNumber(Order order){
+        return order.getCustomer().getPayment().getCensoredCardNumber();
     }
 
 }
