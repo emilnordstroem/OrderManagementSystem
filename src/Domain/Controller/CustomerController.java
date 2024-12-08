@@ -20,7 +20,9 @@ public class CustomerController {
         double result = 0;
         ArrayList<Order> customerOrders = customer.getOrders();
         for(Order order : customerOrders){
-            result += order.getPrice();
+            if(!order.getOrderStatus().equals(OrderStatus.CANCELLED) || !order.getOrderStatus().equals(OrderStatus.RETURNED)){
+                result += order.getPrice();
+            }
         }
         return result;
     }
