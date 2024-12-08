@@ -1,11 +1,11 @@
-package View;
+package View.orderDetails;
 
 import Domain.Models.Order;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class OrderShippingOverviewPane extends GridPane {
+public class OrderShippingPane extends GridPane {
     private final Order selectedOrder;
 
     // Shipping information overview
@@ -17,7 +17,7 @@ public class OrderShippingOverviewPane extends GridPane {
     private final TextField orderDeliveryCity = new TextField();
     private final TextField orderDeliveryCountry = new TextField();
 
-    public OrderShippingOverviewPane(Order order) {
+    public OrderShippingPane(Order order) {
         this.selectedOrder = order;
         innerContent();
         this.setGridLinesVisible(true);

@@ -43,6 +43,5 @@ public class BackEndFunctionalityTest {
         System.out.println(testOrder.getOrderStatus());
         OrderController.orderUpdatedDelivered(testOrder);
         System.out.println(testOrder.getOrderStatus());
-
     }
 }

@@ -29,23 +29,25 @@ public class SearchAlgorithm {
         return null;
     }
     // Binary Search Algorithm: OrderID
-    public static Order searchOrderByID(ArrayList<Order> sortedOrderArrayList, String target){
+    public static ArrayList<Order> searchOrderByID(ArrayList<Order> sortedOrderArrayList, String target){
+        ArrayList<Order> resultArrayList = new ArrayList<>();
         int left = 0;
         int right = sortedOrderArrayList.size();
         while(left <= right){
             int middle = (left + right) / 2;
-            Order candidate = sortedOrderArrayList.get(middle);
-            if(candidate.getId().compareTo(target) == 0){
+            Order candidateOrder = sortedOrderArrayList.get(middle);
+            if(candidateOrder.getId().compareTo(target) == 0){
                 System.out.println("Target found");
-                return candidate;
-            } else if (candidate.getId().compareTo(target) > 0){
+                resultArrayList.add(candidateOrder);
+                break;
+            } else if (candidateOrder.getId().compareTo(target) > 0){
                 right = middle - 1;
             } else {
                 left = middle + 1;
             }
         }
         System.out.println("searchOrderByID() returned null");
-        return null;
+        return resultArrayList;
     }
 
     //====================================================================

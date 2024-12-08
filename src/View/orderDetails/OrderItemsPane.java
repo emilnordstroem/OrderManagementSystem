@@ -1,4 +1,4 @@
-package View;
+package View.orderDetails;
 
 import Domain.Models.Item;
 import Domain.Models.Order;
@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 
-public class OrderItemOverviewPane extends GridPane {
+public class OrderItemsPane extends GridPane {
     private Order selectedOrder;
 
     // Order content overview
@@ -21,7 +21,7 @@ public class OrderItemOverviewPane extends GridPane {
     private final TableColumn<Item, Double> itemPrice = new TableColumn<>("price");
     private final TableColumn<Item, String> currency = new TableColumn<>("currency");
 
-    public OrderItemOverviewPane(Order order) {
+    public OrderItemsPane(Order order) {
         this.selectedOrder = order;
         setElementLayout();
         setAllItemsTableView();

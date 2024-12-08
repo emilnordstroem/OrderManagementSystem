@@ -1,6 +1,8 @@
 package Domain.Models;
 
 import Storage.IDStorage;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ public class Order {
     private LocalDate placementDate;
     private Address deliveryAddress;
     private LocalDate expectedDeliveryDate;
+    private String orderNotation;
 
     public Order(Customer customer, ArrayList<Item> items, Address deliveryAddress) {
         this.id = generateID();
@@ -25,6 +28,7 @@ public class Order {
         this.placementDate = LocalDate.now();
         this.deliveryAddress = deliveryAddress;
         this.expectedDeliveryDate = calculateExpectedDeliveryDate();
+        this.orderNotation = "";
     }
 
     private String generateID(){
@@ -98,5 +102,17 @@ public class Order {
 
     public void setOrderStatusDelivered(){
         this.orderStatus = OrderStatus.DELIVERED;
+    }
+
+    public String getOrderNotation() {
+        return orderNotation;
+    }
+
+    public void setOrderNotation(String orderNotation) {
+        this.orderNotation = orderNotation;
+    }
+
+    public ObservableList<OrderStatus> getOrderStatusArrayList(){
+        return FXCollections.observableArrayList(OrderStatus.values());
     }
 }

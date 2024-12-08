@@ -24,12 +24,17 @@ public class OrderStorage {
     }
 
     public static void updateOrderStorage(Order updatedOrder){
-        for(Order currentOrder : ORDERS){
-            if(currentOrder.getId().compareTo(updatedOrder.getId()) == 0){
-                ORDERS.remove(currentOrder);
-                ORDERS.add(updatedOrder);
-                System.out.println("Order replaced - ORDERS updated in OrderStorage");
+        Order orderToReplace = null;
+        for (Order currentOrder : ORDERS) {
+            if (currentOrder.getId().compareTo(updatedOrder.getId()) == 0) {
+                orderToReplace = currentOrder;
+                break; // Break when order to replace has been found
             }
+        }
+        if (orderToReplace != null) {
+            ORDERS.remove(orderToReplace); // Modify after iteration
+            ORDERS.add(updatedOrder); // Modify after iteration
+            System.out.println("Order replaced - ORDERS updated in OrderStorage");
         }
     }
 

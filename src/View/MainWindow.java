@@ -31,7 +31,7 @@ public class MainWindow extends Application {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE); // Not possible to close tabs
         Tab tabOverview = new Tab("overview"); // Application overview
         tabPane.getTabs().add(tabOverview);
-        tabOverview.setContent(new OverviewPane());
+        tabOverview.setContent(new OrderOverviewPane());
     }
 
     private void elementLayout(){

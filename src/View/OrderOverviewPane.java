@@ -4,6 +4,7 @@ import Domain.Controller.OrderController;
 import Domain.Controller.SearchAlgorithm;
 import Domain.Models.Order;
 import Domain.Models.OrderStatus;
+import View.orderDetails.OrderDetailsWindow;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,7 +17,7 @@ import javafx.scene.layout.VBox;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class OverviewPane extends GridPane {
+public class OrderOverviewPane extends GridPane {
     // Input TextFields
     private final TextField orderIDTextField = new TextField();
     private final TextField customerFullNameTextField = new TextField();
@@ -27,7 +28,7 @@ public class OverviewPane extends GridPane {
     private final Button clearButton = new Button("clear");
     // Order table
     private final TableView<Order> orderOverviewTableView = new TableView<>();
-    private final ObservableList<Order> orderObservableList = FXCollections.observableArrayList(OrderController.getOrders());
+    private ObservableList<Order> orderObservableList = FXCollections.observableArrayList(OrderController.getOrders());
     private final TableColumn<Order, String> orderId = new TableColumn<>("id");
     private final TableColumn<Order, OrderStatus> orderStatus = new TableColumn<>("status");
     private final TableColumn<Order, String> customerFullName = new TableColumn<>("customer");
@@ -35,7 +36,7 @@ public class OverviewPane extends GridPane {
     private final TableColumn<Order, LocalDate> placementDate = new TableColumn<>("placement date");
     private final TableColumn<Order, LocalDate> estimatedDeliveryDate = new TableColumn<>("est. delivery date");
 
-    public OverviewPane() {
+    public OrderOverviewPane() {
         setElementLayout();
         setOrderOverviewTableView();
         setButtonFunctionality();
@@ -69,7 +70,6 @@ public class OverviewPane extends GridPane {
     }
 
     private void setOrderOverviewTableView(){
-
         orderId.setCellValueFactory(new PropertyValueFactory<>("id"));
         orderStatus.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getOrderStatus()));
@@ -91,34 +91,9 @@ public class OverviewPane extends GridPane {
     }
 
     private void setButtonFunctionality(){
+
         searchButton.setOnAction(event -> {
-            ArrayList<Order> targetOrderArrayList = new ArrayList<>();
-            ArrayList<TextField> inputTextFields = constructTextFieldArrayList();
-
-            for(TextField inputTextField : inputTextFields){
-                if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 0){
-                    String orderID = inputTextField.getText();
-                    ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByID();
-                    Order targetOrder = SearchAlgorithm.searchOrderByID(sortedOrderArrayList, orderID);
-                    break;
-                } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 1){
-                    String fullName = inputTextField.getText();
-                    ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByName();
-                    targetOrderArrayList = SearchAlgorithm.searchOrderByName(sortedOrderArrayList, fullName);
-                    break;
-                } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 2){
-                    String phoneNumber = inputTextField.getText();
-                    ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByPhoneNumber();
-                    targetOrderArrayList = SearchAlgorithm.searchOrderByPhoneNumber(sortedOrderArrayList, phoneNumber);
-                    break;
-                } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 2){
-                    String email = inputTextField.getText();
-                    ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByEmail();
-                    targetOrderArrayList = SearchAlgorithm.searchOrderByEmail(sortedOrderArrayList, email);
-                    break;
-                }
-            }
-
+            ArrayList<Order> targetOrderArrayList = searchButtonAction();
             ObservableList<Order> targetOrderObservableList = FXCollections.observableArrayList(targetOrderArrayList);
             orderOverviewTableView.setItems(targetOrderObservableList);
             targetOrderArrayList.clear();
@@ -140,10 +115,39 @@ public class OverviewPane extends GridPane {
             row.setOnMouseClicked(event1 -> {
                 if (event1.getClickCount() == 2 && (! row.isEmpty())) {
                     new OrderDetailsWindow(row.getItem()).showAndWait();
+                    // Updating orderObservableList...
+                    orderObservableList = FXCollections.observableArrayList(OrderController.getOrders());
+                    orderOverviewTableView.setItems(orderObservableList);
                 }
             });
             return row;
         });
+    }
+
+    private ArrayList<Order> searchButtonAction(){
+        ArrayList<TextField> inputTextFields = constructTextFieldArrayList();
+
+        for(TextField inputTextField : inputTextFields){
+            if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 0){
+                String orderID = inputTextField.getText();
+                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByID();
+                return SearchAlgorithm.searchOrderByID(sortedOrderArrayList, orderID);
+            } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 1){
+                String fullName = inputTextField.getText();
+                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByName();
+                return SearchAlgorithm.searchOrderByName(sortedOrderArrayList, fullName);
+            } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 2){
+                String phoneNumber = inputTextField.getText();
+                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByPhoneNumber();
+                return SearchAlgorithm.searchOrderByPhoneNumber(sortedOrderArrayList, phoneNumber);
+            } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 2){
+                String email = inputTextField.getText();
+                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByEmail();
+                return SearchAlgorithm.searchOrderByEmail(sortedOrderArrayList, email);
+            }
+        }
+
+        return null;
     }
 
     // Helper method for search
