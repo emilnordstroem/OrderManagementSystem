@@ -1,4 +1,4 @@
-package View;
+package View.orderOverview;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

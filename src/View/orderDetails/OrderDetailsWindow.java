@@ -3,11 +3,13 @@ package View.orderDetails;
 import Domain.Controller.OrderController;
 import Domain.Models.Order;
 import Domain.Models.OrderStatus;
+import View.Alert;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert.AlertType;
 
 public class OrderDetailsWindow extends Stage {
     private final Order selectedOrder;
@@ -110,37 +112,52 @@ public class OrderDetailsWindow extends Stage {
         closeButton.setOnAction(event -> hide());
 
         editButton.setOnAction(event -> {
-            orderStatusComboBox.setDisable(false);
-            orderStatusComboBox.setItems(selectedOrder.getOrderStatusArrayList());
+            if(!selectedOrder.getOrderStatus().equals(OrderStatus.CANCELLED)){
+                System.out.println("Order has not been cancelled");
+                orderStatusComboBox.setDisable(false);
+                orderStatusComboBox.setItems(selectedOrder.getOrderStatusArrayList());
+            }
             orderNotationTextArea.setEditable(true);
             saveButton.setDisable(false);
         });
 
         saveButton.setOnAction(event -> {
-            String orderNotationChange = orderNotationTextArea.getText();
-            OrderController.orderUpdatedNotation(selectedOrder, orderNotationChange);
-
-            OrderStatus status = orderStatusComboBox.getValue();
-            switch (status) {
-                case PACKED:
-                    OrderController.orderUpdatedPacked(selectedOrder);
-                    break;
-                case INTRANSIT:
-                    OrderController.orderUpdatedInTransit(selectedOrder);
-                    break;
-                case DELIVERED:
-                    OrderController.orderUpdatedDelivered(selectedOrder);
-                    break;
-                case CANCELLED:
-                    OrderController.orderUpdatedCancelled(selectedOrder);
-                    break;
-                default:
-                    System.out.println("Invalid OrderStatus");
-                    break;
-            }
-            saveChangesToOrder();
-            updateOrderInformation();
+            Alert confirmAlert = new Alert(AlertType.CONFIRMATION, "Confirm changes", "Changes may disable future changes to the order");
+            confirmAlert.showAndWait().ifPresent(response -> {
+                if(response == ButtonType.OK){
+                    System.out.println("User confirmed changes");
+                    determineChanges();
+                    saveChangesToOrder();
+                    updateOrderInformation();
+                } else {
+                    System.out.println("User didn't confirm changes");
+                }
+            });
         });
+    }
+
+    private void determineChanges(){
+        String orderNotationChange = orderNotationTextArea.getText();
+        OrderController.orderUpdatedNotation(selectedOrder, orderNotationChange);
+
+        OrderStatus status = orderStatusComboBox.getValue();
+        switch (status) {
+            case PACKED:
+                OrderController.orderUpdatedPacked(selectedOrder);
+                break;
+            case INTRANSIT:
+                OrderController.orderUpdatedInTransit(selectedOrder);
+                break;
+            case DELIVERED:
+                OrderController.orderUpdatedDelivered(selectedOrder);
+                break;
+            case CANCELLED:
+                OrderController.orderUpdatedCancelled(selectedOrder);
+                break;
+            default:
+                System.out.println("Invalid OrderStatus");
+                break;
+        }
     }
 
     private void saveChangesToOrder(){

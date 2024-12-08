@@ -1,4 +1,4 @@
-package View;
+package View.orderOverview;
 
 import Domain.Controller.OrderController;
 import Domain.Controller.SearchAlgorithm;
