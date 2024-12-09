@@ -87,5 +87,4 @@ public class OrderController {
     public static String getPaymentCardNumber(Order order){
         return order.getCustomer().getPayment().getCensoredCardNumber();
     }
-
 }

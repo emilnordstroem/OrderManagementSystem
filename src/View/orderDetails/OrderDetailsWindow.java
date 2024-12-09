@@ -4,12 +4,16 @@ import Domain.Controller.OrderController;
 import Domain.Models.Order;
 import Domain.Models.OrderStatus;
 import View.Alert;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.control.Alert.AlertType;
+
+import java.util.ArrayList;
 
 public class OrderDetailsWindow extends Stage {
     private final Order selectedOrder;
@@ -119,7 +123,7 @@ public class OrderDetailsWindow extends Stage {
             if(!(selectedOrder.getOrderStatus().equals(OrderStatus.CANCELLED) || selectedOrder.getOrderStatus().equals(OrderStatus.RETURNED))){
                 System.out.println("Order has not been cancelled");
                 orderStatusComboBox.setDisable(false);
-                orderStatusComboBox.setItems(selectedOrder.getOrderStatusArrayList());
+                setOrderStatusComboBox();
             }
             orderNotationTextArea.setEditable(true);
             saveButton.setDisable(false);
@@ -138,6 +142,27 @@ public class OrderDetailsWindow extends Stage {
                 }
             });
         });
+    }
+
+    private void setOrderStatusComboBox(){
+        ArrayList<OrderStatus> orderStatusesToShowArrayList = new ArrayList<>();
+        switch (selectedOrder.getOrderStatus()){
+            case PLACED:
+                orderStatusesToShowArrayList.add(OrderStatus.PACKED);
+                orderStatusesToShowArrayList.add(OrderStatus.CANCELLED);
+                break;
+            case PACKED:
+                orderStatusesToShowArrayList.add(OrderStatus.INTRANSIT);
+                break;
+            case INTRANSIT:
+                orderStatusesToShowArrayList.add(OrderStatus.DELIVERED);
+                break;
+            case DELIVERED:
+                orderStatusesToShowArrayList.add(OrderStatus.RETURNED);
+                break;
+        }
+        ObservableList<OrderStatus> orderStatusesToShowObservableList = FXCollections.observableList(orderStatusesToShowArrayList);
+        orderStatusComboBox.setItems(orderStatusesToShowObservableList);
     }
 
     private void determineChanges(){
