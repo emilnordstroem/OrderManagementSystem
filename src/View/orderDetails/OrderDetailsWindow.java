@@ -145,24 +145,24 @@ public class OrderDetailsWindow extends Stage {
     }
 
     private void setOrderStatusComboBox(){
-        ArrayList<OrderStatus> orderStatusesToShowArrayList = new ArrayList<>();
+        ArrayList<OrderStatus> availableOrderStatuses = new ArrayList<>();
         switch (selectedOrder.getOrderStatus()){
             case PLACED:
-                orderStatusesToShowArrayList.add(OrderStatus.PACKED);
-                orderStatusesToShowArrayList.add(OrderStatus.CANCELLED);
+                availableOrderStatuses.add(OrderStatus.PACKED);
+                availableOrderStatuses.add(OrderStatus.CANCELLED);
                 break;
             case PACKED:
-                orderStatusesToShowArrayList.add(OrderStatus.INTRANSIT);
+                availableOrderStatuses.add(OrderStatus.INTRANSIT);
                 break;
             case INTRANSIT:
-                orderStatusesToShowArrayList.add(OrderStatus.DELIVERED);
+                availableOrderStatuses.add(OrderStatus.DELIVERED);
                 break;
             case DELIVERED:
-                orderStatusesToShowArrayList.add(OrderStatus.RETURNED);
+                availableOrderStatuses.add(OrderStatus.RETURNED);
                 break;
         }
-        ObservableList<OrderStatus> orderStatusesToShowObservableList = FXCollections.observableList(orderStatusesToShowArrayList);
-        orderStatusComboBox.setItems(orderStatusesToShowObservableList);
+        ObservableList<OrderStatus> availableOrderStatusesObservableList = FXCollections.observableList(availableOrderStatuses);
+        orderStatusComboBox.setItems(availableOrderStatusesObservableList);
     }
 
     private void determineChanges(){
