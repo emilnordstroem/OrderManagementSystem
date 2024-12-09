@@ -14,7 +14,7 @@ public class Customer {
     private String phoneNo;
     private String email;
     private LocalDate dateOfBirth;
-    private Address address;
+    private final ArrayList<Address> address = new ArrayList<>();
     private final ArrayList<Order> orders = new ArrayList<>();
     private Payment payment;
 
@@ -26,7 +26,7 @@ public class Customer {
         this.phoneNo = phoneNo;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
-        this.address = address;
+        this.address.add(address);
         this.payment = payment;
     }
 
@@ -95,8 +95,8 @@ public class Customer {
         return String.format("%s %s", firstName, lastName);
     }
 
-    public Address getAddress() {
-        return address;
+    public ArrayList<Address> getAddress() {
+        return new ArrayList<>(address);
     }
 
     public Payment getPayment() {

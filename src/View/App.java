@@ -345,7 +345,7 @@ public class App {
                 itemArrayList.add(item);
             }
 
-            Order order = OrderController.createOrder(customer, itemArrayList, customer.getAddress());
+            Order order = OrderController.createOrder(customer, itemArrayList, customer.getAddress().getFirst());
             ORDERSARRAYLIST.add(order);
         }
 

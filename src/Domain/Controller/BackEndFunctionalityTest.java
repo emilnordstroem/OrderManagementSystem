@@ -33,7 +33,7 @@ public class BackEndFunctionalityTest {
         ArrayList<Item> orderedItems = new ArrayList<>();
         orderedItems.add(testItem1);
         orderedItems.add(testItem2);
-        Order testOrder = OrderController.createOrder(testCustomer, orderedItems, testCustomer.getAddress());
+        Order testOrder = OrderController.createOrder(testCustomer, orderedItems, testCustomer.getAddress().getFirst());
         System.out.println(testOrder.getPrice());
         System.out.println(CustomerController.getTotalSpending(testCustomer));
         //==============================================================
