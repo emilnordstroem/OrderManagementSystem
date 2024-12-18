@@ -2,7 +2,7 @@ package View.orderOverview;
 
 import Domain.Controller.CustomerController;
 import Domain.Models.Customer;
-import View.utility.SearchButtonAction;
+import View.utility.search.SearchButtonAction;
 import View.utility.TableViewFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -62,7 +62,7 @@ public class CustomerOverviewPane extends GridPane {
     private void setButtonFunctionality(){
         searchButton.setOnAction(event -> {
             try {
-                Customer targetCustomer = SearchButtonAction.searchCustomer(constructTextFieldArrayList());
+                ArrayList<Customer> targetCustomer = SearchButtonAction.searchCustomer(constructTextFieldArrayList());
                 ObservableList<Customer> targetOrderObservableList = FXCollections.observableArrayList(targetCustomer);
                 customerOverviewTableView.setItems(targetOrderObservableList);
             } catch (Exception nullPointerException) {

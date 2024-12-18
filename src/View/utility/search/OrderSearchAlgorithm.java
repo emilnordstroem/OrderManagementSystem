@@ -1,12 +1,11 @@
-package View.utility;
+package View.utility.search;
 
-import Domain.Models.Customer;
 import Domain.Models.Order;
-import Storage.OrderStorage;
 
 import java.util.ArrayList;
 
-public class SearchAlgorithm {
+public class OrderSearchAlgorithm {
+    //====================================================================
     // Binary Search Algorithm: OrderID
     public static ArrayList<Order> searchOrderByID(ArrayList<Order> sortedOrderArrayList, String target){
         ArrayList<Order> resultArrayList = new ArrayList<>();
@@ -25,7 +24,7 @@ public class SearchAlgorithm {
                 left = middle + 1;
             }
         }
-        System.out.println("searchOrderByID() returned null");
+        System.out.println("searchOrderByID() returned");
         return resultArrayList;
     }
 
@@ -49,13 +48,14 @@ public class SearchAlgorithm {
     private static ArrayList<Order> searchByFullName(ArrayList<Order> sortedOrderArrayList, String target){
         ArrayList<Order> resultArrayList = new ArrayList<>();
         int left = 0;
-        int right = sortedOrderArrayList.size();
+        int right = sortedOrderArrayList.size() - 1;
 
         while(left <= right){
             int middle = (left + right) / 2;
             Order candidateOrder = sortedOrderArrayList.get(middle);
             String candidateFullName = candidateOrder.getCustomer().getFullName();
-            if(candidateFullName.compareTo(target) == 0){
+
+            if(candidateOrder.getCustomer().getFullName().compareTo(target) == 0){
                 System.out.println("Target found and added to list...");
                 resultArrayList.add(candidateOrder);
                 for(int index = middle + 1; index < right; index++){
@@ -90,7 +90,7 @@ public class SearchAlgorithm {
     private static ArrayList<Order> searchByFirstName(ArrayList<Order> sortedOrderArrayList, String target){
         ArrayList<Order> resultArrayList = new ArrayList<>();
         int left = 0;
-        int right = sortedOrderArrayList.size();
+        int right = sortedOrderArrayList.size() - 1;
 
         while(left <= right){
             int middle = (left + right) / 2;
@@ -154,7 +154,7 @@ public class SearchAlgorithm {
                 for(int index = middle - 1; index > left; index--){
                     System.out.print("Searching further to the left...");
                     candidateOrder = sortedOrderArrayList.get(index);
-                    candidatePhoneNumber = candidateOrder.getCustomer().getFullName();
+                    candidatePhoneNumber = candidateOrder.getCustomer().getPhoneNo();
                     if(candidatePhoneNumber.compareTo(target) == 0){
                         System.out.println("Order added to list");
                         resultArrayList.add(candidateOrder);
@@ -189,7 +189,6 @@ public class SearchAlgorithm {
                 resultArrayList.add(candidateOrder);
                 for(int index = middle + 1; index < right; index++){
                     System.out.print("Searching further to the right...");
-                    // Reassignment of ordre/string variables
                     candidateOrder = sortedOrderArrayList.get(index);
                     candidateEmail = candidateOrder.getCustomer().getEmail();
                     if(candidateEmail.compareTo(target) == 0){
@@ -200,7 +199,7 @@ public class SearchAlgorithm {
                 for(int index = middle - 1; index > left; index--){
                     System.out.print("Searching further to the left...");
                     candidateOrder = sortedOrderArrayList.get(index);
-                    candidateEmail = candidateOrder.getCustomer().getFullName();
+                    candidateEmail = candidateOrder.getCustomer().getEmail();
                     if(candidateEmail.compareTo(target) == 0){
                         System.out.println("Order added to list");
                         resultArrayList.add(candidateOrder);
@@ -215,7 +214,7 @@ public class SearchAlgorithm {
         }
         System.out.println("searchOrderByEmail() returned");
         for(Order order : resultArrayList){
-            System.out.println(order.getCustomer().getPhoneNo());
+            System.out.println(order.getCustomer().getEmail());
         }
         return resultArrayList;
     }

@@ -3,7 +3,7 @@ package View.orderOverview;
 import Domain.Controller.OrderController;
 import Domain.Models.Order;
 import View.orderDetails.OrderDetailsWindow;
-import View.utility.SearchButtonAction;
+import View.utility.search.SearchButtonAction;
 import View.utility.TableViewFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,9 +61,9 @@ public class OrderOverviewPane extends GridPane {
         this.add(orderOverviewTableView,0,1);
         orderOverviewTableView.setPrefWidth(1000);
 
-        // Research why there is a dublicated Children error when VBox is not implementet??
-        VBox vBox = new VBox(orderOverviewTableView);
-        this.add(vBox, 0,1);
+//        // Research why there is a dublicated Children error when VBox is not implementet??
+//        VBox vBox = new VBox(orderOverviewTableView);
+//        this.add(vBox, 0,1);
     }
 
     private void setSearchKeyFunctionality(){
@@ -71,6 +71,7 @@ public class OrderOverviewPane extends GridPane {
             if (event.getCode() == KeyCode.ENTER) {
                 try {
                     ArrayList<Order> targetOrderArrayList = SearchButtonAction.orderSearch(constructTextFieldArrayList());
+                    assert targetOrderArrayList != null;
                     ObservableList<Order> targetOrderObservableList = FXCollections.observableArrayList(targetOrderArrayList);
                     orderOverviewTableView.setItems(targetOrderObservableList);
                     targetOrderArrayList.clear();
@@ -85,9 +86,9 @@ public class OrderOverviewPane extends GridPane {
         searchButton.setOnAction(event -> {
             try {
                 ArrayList<Order> targetOrderArrayList = SearchButtonAction.orderSearch(constructTextFieldArrayList());
+                assert targetOrderArrayList != null;
                 ObservableList<Order> targetOrderObservableList = FXCollections.observableArrayList(targetOrderArrayList);
                 orderOverviewTableView.setItems(targetOrderObservableList);
-                targetOrderArrayList.clear();
             } catch (Exception nullPointerException) {
                 System.out.println("NullPointerException() : Search without input");
             }
@@ -110,8 +111,9 @@ public class OrderOverviewPane extends GridPane {
                 if (event1.getClickCount() == 2 && (! row.isEmpty())) {
                     new OrderDetailsWindow(row.getItem()).showAndWait();
                     // Updating orderObservableList...
-                    orderObservableList = FXCollections.observableArrayList(OrderController.getOrders());
-                    orderOverviewTableView.setItems(orderObservableList);
+//                    orderObservableList = FXCollections.observableArrayList(OrderController.getOrders());
+//                    orderOverviewTableView.setItems(orderObservableList);
+                    orderObservableList.setAll(OrderController.getOrders());
                 }
             });
             return row;

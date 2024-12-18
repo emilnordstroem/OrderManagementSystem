@@ -1,9 +1,6 @@
 package Storage;
 
 import Domain.Models.Customer;
-import Domain.Models.Item;
-import Domain.Models.Order;
-
 import java.util.ArrayList;
 
 public class CustomerStorage {

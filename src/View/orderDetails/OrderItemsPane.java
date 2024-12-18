@@ -9,13 +9,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 
 public class OrderItemsPane extends GridPane {
-    private Order selectedOrder;
     // Order content overview
     private final TableView<Item> allItemsTableView;
 
     public OrderItemsPane(Order order) {
-        this.selectedOrder = order;
-        ObservableList<Item> orderedItemsObservableList = FXCollections.observableArrayList(selectedOrder.getItems());
+        ObservableList<Item> orderedItemsObservableList = FXCollections.observableArrayList(order.getItems());
         allItemsTableView = TableViewFactory.createItemsTableView(orderedItemsObservableList);
         setElementLayout();
         this.setGridLinesVisible(false);
