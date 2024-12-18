@@ -31,9 +31,9 @@ public class Customer {
     }
 
     private String generateID(){
-        String id = String.valueOf(new Random().nextInt(111, 999) + 1);
+        String id = String.valueOf(new Random().nextInt(1_000, 9_999) + 1);
         while(IDStorage.customerIdentificationAlreadyExist(id)){
-            id = String.valueOf(new Random().nextInt(111, 999) + 1);
+            id = String.valueOf(new Random().nextInt(1_000, 9_999) + 1);
         }
         IDStorage.addCustomerID(id);
         return id;

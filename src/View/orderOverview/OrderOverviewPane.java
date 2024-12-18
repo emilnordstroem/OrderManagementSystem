@@ -1,20 +1,18 @@
 package View.orderOverview;
 
 import Domain.Controller.OrderController;
-import Domain.Controller.SearchAlgorithm;
 import Domain.Models.Order;
-import Domain.Models.OrderStatus;
 import View.orderDetails.OrderDetailsWindow;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import View.utility.SearchButtonAction;
+import View.utility.TableViewFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 
 public class OrderOverviewPane extends GridPane {
@@ -27,18 +25,13 @@ public class OrderOverviewPane extends GridPane {
     private final Button searchButton = new Button("search");
     private final Button clearButton = new Button("clear");
     // Order table
-    private final TableView<Order> orderOverviewTableView = new TableView<>();
+    private final TableView<Order> orderOverviewTableView;
     private ObservableList<Order> orderObservableList = FXCollections.observableArrayList(OrderController.getOrders());
-    private final TableColumn<Order, String> orderId = new TableColumn<>("id");
-    private final TableColumn<Order, OrderStatus> orderStatus = new TableColumn<>("status");
-    private final TableColumn<Order, String> customerFullName = new TableColumn<>("customer");
-    private final TableColumn<Order, String> deliveryAddress = new TableColumn<>("delivery address");
-    private final TableColumn<Order, LocalDate> placementDate = new TableColumn<>("placement date");
-    private final TableColumn<Order, LocalDate> estimatedDeliveryDate = new TableColumn<>("est. delivery date");
 
     public OrderOverviewPane() {
+        orderOverviewTableView = TableViewFactory.createOrderTableView(orderObservableList);
         setElementLayout();
-        setOrderOverviewTableView();
+        setSearchKeyFunctionality();
         setButtonFunctionality();
         setOrderSelectionFunctionality();
         this.setGridLinesVisible(false);
@@ -67,34 +60,31 @@ public class OrderOverviewPane extends GridPane {
         this.add(pane,0,0);
         this.add(orderOverviewTableView,0,1);
         orderOverviewTableView.setPrefWidth(1000);
-    }
-
-    private void setOrderOverviewTableView(){
-        orderId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        orderStatus.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getOrderStatus()));
-        customerFullName.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getCustomer().getFullName()));
-        deliveryAddress.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getDeliveryAddress().toString()));
-        placementDate.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getPlacementDate()));
-        estimatedDeliveryDate.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getExpectedDeliveryDate()));
-
-        orderOverviewTableView.setItems(orderObservableList);
-        orderOverviewTableView.getColumns().addAll(orderId, orderStatus, customerFullName, deliveryAddress, placementDate, estimatedDeliveryDate);
 
         // Research why there is a dublicated Children error when VBox is not implementet??
         VBox vBox = new VBox(orderOverviewTableView);
         this.add(vBox, 0,1);
     }
 
-    private void setButtonFunctionality(){
+    private void setSearchKeyFunctionality(){
+        this.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    ArrayList<Order> targetOrderArrayList = SearchButtonAction.orderSearch(constructTextFieldArrayList());
+                    ObservableList<Order> targetOrderObservableList = FXCollections.observableArrayList(targetOrderArrayList);
+                    orderOverviewTableView.setItems(targetOrderObservableList);
+                    targetOrderArrayList.clear();
+                } catch (Exception nullPointerException) {
+                    System.out.println("NullPointerException() : Search without input");
+                }
+            }
+        });
+    }
 
+    private void setButtonFunctionality(){
         searchButton.setOnAction(event -> {
             try {
-                ArrayList<Order> targetOrderArrayList = searchButtonAction();
+                ArrayList<Order> targetOrderArrayList = SearchButtonAction.orderSearch(constructTextFieldArrayList());
                 ObservableList<Order> targetOrderObservableList = FXCollections.observableArrayList(targetOrderArrayList);
                 orderOverviewTableView.setItems(targetOrderObservableList);
                 targetOrderArrayList.clear();
@@ -126,32 +116,6 @@ public class OrderOverviewPane extends GridPane {
             });
             return row;
         });
-    }
-
-    private ArrayList<Order> searchButtonAction(){
-        ArrayList<TextField> inputTextFields = constructTextFieldArrayList();
-
-        for(TextField inputTextField : inputTextFields){
-            if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 0){
-                String orderID = inputTextField.getText();
-                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByID();
-                return SearchAlgorithm.searchOrderByID(sortedOrderArrayList, orderID);
-            } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 1){
-                String fullName = inputTextField.getText();
-                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByName();
-                return SearchAlgorithm.searchOrderByName(sortedOrderArrayList, fullName);
-            } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 2){
-                String phoneNumber = inputTextField.getText();
-                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByPhoneNumber();
-                return SearchAlgorithm.searchOrderByPhoneNumber(sortedOrderArrayList, phoneNumber);
-            } else if(!inputTextField.getText().isBlank() && inputTextFields.indexOf(inputTextField) == 2){
-                String email = inputTextField.getText();
-                ArrayList<Order> sortedOrderArrayList = SearchAlgorithm.sortedOrderArrayListByEmail();
-                return SearchAlgorithm.searchOrderByEmail(sortedOrderArrayList, email);
-            }
-        }
-
-        return null;
     }
 
     // Helper method for search

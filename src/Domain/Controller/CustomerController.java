@@ -58,4 +58,8 @@ public class CustomerController {
         }
     }
 
+    public static ArrayList<Customer> getCustomers(){
+        return new ArrayList<>(CustomerStorage.getCustomers());
+    }
+
 }

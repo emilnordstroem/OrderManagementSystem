@@ -26,8 +26,13 @@ public class MainWindow extends Application {
 
     private void innerTabPane(TabPane tabPane){
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE); // Not possible to close tabs
-        Tab tabOverview = new Tab("overview"); // Application overview
-        tabPane.getTabs().add(tabOverview);
-        tabOverview.setContent(new OrderOverviewPane());
+
+        Tab tabOrderOverview = new Tab("order"); // Application overview
+        tabPane.getTabs().add(tabOrderOverview);
+        tabOrderOverview.setContent(new OrderOverviewPane());
+
+        Tab tabCustomerOverview = new Tab("customer"); // Application overview
+        tabPane.getTabs().add(tabCustomerOverview);
+        tabCustomerOverview.setContent(new CustomerOverviewPane());
     }
 }
