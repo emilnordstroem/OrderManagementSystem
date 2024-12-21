@@ -20,7 +20,7 @@ public class Order {
     private String orderNotation;
 
     public Order(Customer customer, ArrayList<Item> items, Address deliveryAddress) {
-        this.id = generateID();
+        this.id = Long.toString(generateID());
         this.orderStatus = setOrderStatusPlaced();
         this.customer = customer;
         this.items = items;
@@ -31,10 +31,10 @@ public class Order {
         this.orderNotation = "";
     }
 
-    private String generateID(){
-        String id = String.valueOf(new Random().nextInt(111_111, 999_999) + 1);
+    private Long generateID(){
+        long id = new Random().nextInt(111_111, 999_999) + 1;
         while(IDStorage.orderIdentificationAlreadyExist(id)){
-            id = String.valueOf(new Random().nextInt(111_111, 999_999) + 1);
+            id = new Random().nextInt(111_111, 999_999) + 1;
         }
         IDStorage.addOrderId(id);
         return id;

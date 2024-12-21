@@ -1,7 +1,6 @@
 package Domain.Controller;
 
 import Domain.Models.*;
-import Storage.IDStorage;
 import Storage.OrderStorage;
 import java.util.ArrayList;
 
@@ -68,12 +67,6 @@ public class OrderController {
     public static void orderUpdatedNotation(Order order, String updatedNotation){
         System.out.println("orderUpdatedNotation() called in OrderController...");
         order.setOrderNotation(updatedNotation);
-    }
-
-    public static void removeOrder(Order order){
-        System.out.println("removeOrder() called in CustomerController...");
-        OrderStorage.removeOrder(order);
-        IDStorage.removeOrderId(order.getId());
     }
 
     public static ArrayList<Order> getOrders(){

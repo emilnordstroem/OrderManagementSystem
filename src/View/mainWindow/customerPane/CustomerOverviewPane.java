@@ -1,12 +1,16 @@
-package View.orderOverview;
+package View.mainWindow.customerPane;
 
 import Domain.Controller.CustomerController;
+import Domain.Controller.OrderController;
 import Domain.Models.Customer;
+import Domain.Models.Order;
+import View.orderDetailsWindow.OrderDetailsWindow;
 import View.utility.search.SearchButtonAction;
 import View.utility.TableViewFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,13 +27,15 @@ public class CustomerOverviewPane extends GridPane {
     private final Button searchButton = new Button("search");
     private final Button clearButton = new Button("clear");
     // Order table
-    private TableView<Customer> customerOverviewTableView;
+    private final TableView<Customer> customerOverviewTableView;
     private final ObservableList<Customer> customerObservableList = FXCollections.observableArrayList(CustomerController.getCustomers());
 
     public CustomerOverviewPane(){
         customerOverviewTableView = TableViewFactory.createCustomerTableView(customerObservableList);
         setElementLayout();
+        setCustomerSelectionFunctionality();
         setButtonFunctionality();
+        setSearchKeyFunctionality();
         this.setGridLinesVisible(true);
     }
 
@@ -63,8 +69,9 @@ public class CustomerOverviewPane extends GridPane {
         searchButton.setOnAction(event -> {
             try {
                 ArrayList<Customer> targetCustomer = SearchButtonAction.searchCustomer(constructTextFieldArrayList());
-                ObservableList<Customer> targetOrderObservableList = FXCollections.observableArrayList(targetCustomer);
-                customerOverviewTableView.setItems(targetOrderObservableList);
+                assert targetCustomer != null;
+                ObservableList<Customer> targetCustomerObservableList = FXCollections.observableArrayList(targetCustomer);
+                customerOverviewTableView.setItems(targetCustomerObservableList);
             } catch (Exception nullPointerException) {
                 System.out.println("NullPointerException() : Search without input");
             }
@@ -77,6 +84,32 @@ public class CustomerOverviewPane extends GridPane {
             customerPhoneNumberTextField.clear();
             customerEmailTextField.clear();
             customerOverviewTableView.setItems(customerObservableList);
+        });
+    }
+
+    private void setSearchKeyFunctionality(){
+        this.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    ArrayList<Customer> targetCustomer = SearchButtonAction.searchCustomer(constructTextFieldArrayList());
+                    assert targetCustomer != null;
+                    ObservableList<Customer> targetCustomerObservableList = FXCollections.observableArrayList(targetCustomer);
+                    customerOverviewTableView.setItems(targetCustomerObservableList);
+                } catch (Exception nullPointerException) {
+                    System.out.println("NullPointerException() : Search without input");
+                }
+            }
+        });
+    }
+
+    private void setCustomerSelectionFunctionality(){
+        customerOverviewTableView.setRowFactory(event -> {
+            TableRow<Customer> row = new TableRow<>();
+            row.setOnMouseClicked(event1 -> {
+                this.add(new CustomerDetailsOverview(row.getItem()), 1,0,1,2);
+                customerObservableList.setAll(CustomerController.getCustomers());
+            });
+            return row;
         });
     }
 

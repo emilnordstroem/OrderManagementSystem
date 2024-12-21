@@ -1,4 +1,4 @@
-package View.orderDetails;
+package View.orderDetailsWindow;
 
 import Domain.Models.Order;
 import javafx.scene.control.Label;

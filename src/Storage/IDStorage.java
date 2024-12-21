@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class IDStorage {
     private static ArrayList<String> CUSTOMERIDS = new ArrayList<>();
-    private static ArrayList<String> ORDERIDS = new ArrayList<>();
+    private static ArrayList<Long> ORDERIDS = new ArrayList<>();
     private static ArrayList<String> ITEMIDS = new ArrayList<>();
     private static ArrayList<String> CARDNUMBERS = new ArrayList<>();
 
@@ -28,11 +28,11 @@ public class IDStorage {
 
     //=================================================================
     // OrderID
-    public static boolean orderIdentificationAlreadyExist(String identification){
+    public static boolean orderIdentificationAlreadyExist(long identification){
         return ORDERIDS.contains(identification);
     }
 
-    public static void addOrderId(String identification){
+    public static void addOrderId(Long identification){
         if(!ORDERIDS.contains(identification)){
             ORDERIDS.add(identification);
             System.out.println("Order identification was added to IDStorage");

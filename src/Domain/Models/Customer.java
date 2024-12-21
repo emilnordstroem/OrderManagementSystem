@@ -91,6 +91,10 @@ public class Customer {
         return email;
     }
 
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
     public String getFullName(){
         return String.format("%s %s", firstName, lastName);
     }

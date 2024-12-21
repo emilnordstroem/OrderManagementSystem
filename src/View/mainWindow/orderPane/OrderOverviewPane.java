@@ -1,8 +1,8 @@
-package View.orderOverview;
+package View.mainWindow.orderPane;
 
 import Domain.Controller.OrderController;
 import Domain.Models.Order;
-import View.orderDetails.OrderDetailsWindow;
+import View.orderDetailsWindow.OrderDetailsWindow;
 import View.utility.search.SearchButtonAction;
 import View.utility.TableViewFactory;
 import javafx.collections.FXCollections;
@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
@@ -110,9 +109,6 @@ public class OrderOverviewPane extends GridPane {
             row.setOnMouseClicked(event1 -> {
                 if (event1.getClickCount() == 2 && (! row.isEmpty())) {
                     new OrderDetailsWindow(row.getItem()).showAndWait();
-                    // Updating orderObservableList...
-//                    orderObservableList = FXCollections.observableArrayList(OrderController.getOrders());
-//                    orderOverviewTableView.setItems(orderObservableList);
                     orderObservableList.setAll(OrderController.getOrders());
                 }
             });

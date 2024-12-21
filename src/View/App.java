@@ -4,7 +4,7 @@ import Domain.Controller.CustomerController;
 import Domain.Controller.ItemController;
 import Domain.Controller.OrderController;
 import Domain.Models.*;
-import View.orderOverview.MainWindow;
+import View.mainWindow.MainWindow;
 import javafx.application.Application;
 
 import java.time.LocalDate;
@@ -350,6 +350,7 @@ public class App {
         }
 
     }
+
     private static String generateRandomPhoneNumber() {
         // Danish phone numbers are typically 8 digits
         return String.format("%08d", new Random().nextInt(100000000));

@@ -1,5 +1,7 @@
-package View.orderOverview;
+package View.mainWindow;
 
+import View.mainWindow.customerPane.CustomerOverviewPane;
+import View.mainWindow.orderPane.OrderOverviewPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

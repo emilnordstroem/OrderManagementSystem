@@ -1,4 +1,4 @@
-package View.orderDetails;
+package View.orderDetailsWindow;
 
 import Domain.Models.Item;
 import Domain.Models.Order;

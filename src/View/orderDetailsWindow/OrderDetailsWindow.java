@@ -1,4 +1,4 @@
-package View.orderDetails;
+package View.orderDetailsWindow;
 
 import Domain.Controller.OrderController;
 import Domain.Models.Order;
@@ -82,7 +82,7 @@ public class OrderDetailsWindow extends Stage {
 
     private void orderElementContents(){
         orderIDTextField.setEditable(false);
-        orderIDTextField.setText(selectedOrder.getId());
+        orderIDTextField.setText(String.valueOf(selectedOrder.getId()));
 
         orderNetValueTextField.setEditable(false);
         orderNetValueTextField.setText(String.format("%.2f",selectedOrder.getPrice()));
