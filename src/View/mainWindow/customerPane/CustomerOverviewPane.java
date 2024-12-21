@@ -9,6 +9,7 @@ import View.utility.search.SearchButtonAction;
 import View.utility.TableViewFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
@@ -18,6 +19,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class CustomerOverviewPane extends GridPane {
+    private Node customerDetailsView;
     // Input TextFields
     private final TextField customerIDTextField = new TextField();
     private final TextField customerFullNameTextField = new TextField();
@@ -106,8 +108,11 @@ public class CustomerOverviewPane extends GridPane {
         customerOverviewTableView.setRowFactory(event -> {
             TableRow<Customer> row = new TableRow<>();
             row.setOnMouseClicked(event1 -> {
-                this.add(new CustomerDetailsOverview(row.getItem()), 1,0,1,2);
-                customerObservableList.setAll(CustomerController.getCustomers());
+                    if (customerDetailsView != null) {
+                        this.getChildren().remove(customerDetailsView); // Assuming 'this' is a Pane
+                    }
+                    customerDetailsView = new CustomerDetailsOverview(row.getItem());
+                    this.add(customerDetailsView, 1, 0, 1, 2);
             });
             return row;
         });

@@ -4,6 +4,7 @@ import Domain.Controller.OrderController;
 import Domain.Models.Order;
 import Domain.Models.OrderStatus;
 import View.Alert;
+import View.utility.StatusComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -121,7 +122,6 @@ public class OrderDetailsWindow extends Stage {
 
         editButton.setOnAction(event -> {
             if(!(selectedOrder.getOrderStatus().equals(OrderStatus.CANCELLED) || selectedOrder.getOrderStatus().equals(OrderStatus.RETURNED))){
-                System.out.println("Order has not been cancelled");
                 orderStatusComboBox.setDisable(false);
                 setOrderStatusComboBox();
             }
@@ -145,22 +145,7 @@ public class OrderDetailsWindow extends Stage {
     }
 
     private void setOrderStatusComboBox(){
-        ArrayList<OrderStatus> availableOrderStatuses = new ArrayList<>();
-        switch (selectedOrder.getOrderStatus()){
-            case PLACED:
-                availableOrderStatuses.add(OrderStatus.PACKED);
-                availableOrderStatuses.add(OrderStatus.CANCELLED);
-                break;
-            case PACKED:
-                availableOrderStatuses.add(OrderStatus.INTRANSIT);
-                break;
-            case INTRANSIT:
-                availableOrderStatuses.add(OrderStatus.DELIVERED);
-                break;
-            case DELIVERED:
-                availableOrderStatuses.add(OrderStatus.RETURNED);
-                break;
-        }
+        ArrayList<OrderStatus> availableOrderStatuses = StatusComboBox.setOrderStatusComboBox(selectedOrder);
         ObservableList<OrderStatus> availableOrderStatusesObservableList = FXCollections.observableList(availableOrderStatuses);
         orderStatusComboBox.setItems(availableOrderStatusesObservableList);
     }
@@ -168,28 +153,7 @@ public class OrderDetailsWindow extends Stage {
     private void determineChanges(){
         String orderNotationChange = orderNotationTextArea.getText();
         OrderController.orderUpdatedNotation(selectedOrder, orderNotationChange);
-
-        OrderStatus status = orderStatusComboBox.getValue();
-        switch (status) {
-            case PACKED:
-                OrderController.orderUpdatedPacked(selectedOrder);
-                break;
-            case INTRANSIT:
-                OrderController.orderUpdatedInTransit(selectedOrder);
-                break;
-            case DELIVERED:
-                OrderController.orderUpdatedDelivered(selectedOrder);
-                break;
-            case CANCELLED:
-                OrderController.orderUpdatedCancelled(selectedOrder);
-                break;
-            case RETURNED:
-                OrderController.orderUpdatedReturned(selectedOrder);
-                break;
-            default:
-                System.out.println("Invalid OrderStatus");
-                break;
-        }
+        StatusComboBox.orderStatusChanges(selectedOrder, orderStatusComboBox.getValue());
     }
 
     private void saveChangesToOrder(){
