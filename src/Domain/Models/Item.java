@@ -41,4 +41,13 @@ public class Item {
     public double getPrice() {
         return price;
     }
+
+    @Override
+    public String toString(){
+        return String.format("%s: %s%n%.2f DKK",
+                name,
+                description,
+                price
+        );
+    }
 }

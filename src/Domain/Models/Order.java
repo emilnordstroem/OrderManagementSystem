@@ -116,7 +116,17 @@ public class Order {
         this.orderNotation = orderNotation;
     }
 
-    public ObservableList<OrderStatus> getOrderStatusArrayList(){
-        return FXCollections.observableArrayList(OrderStatus.values());
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append(
+                String.format("%s (%s)%n",
+                id,
+                orderStatus
+        ));
+        for(Item item : items){
+            builder.append(String.format("%s%n", item.toString()));
+        }
+        return builder.toString();
     }
 }
