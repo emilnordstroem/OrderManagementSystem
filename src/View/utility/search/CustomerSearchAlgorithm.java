@@ -7,26 +7,29 @@ import java.util.ArrayList;
 public class CustomerSearchAlgorithm {
     //====================================================================
     // Binary Search Algorithm: CustomerID
-    public static ArrayList<Customer> searchCustomerByID(ArrayList<Customer> sortedCustomerArrayList, String target){
+    public static ArrayList<Customer> searchCustomerByID(ArrayList<Customer> sortedCustomerArrayList, String target) {
         ArrayList<Customer> resultArrayList = new ArrayList<>();
         int left = 0;
-        int right = sortedCustomerArrayList.size();
-        while(left <= right){
+        int right = sortedCustomerArrayList.size() - 1;
+
+        while (left <= right) {
             int middle = (left + right) / 2;
             Customer candidateCustomer = sortedCustomerArrayList.get(middle);
-            if(candidateCustomer.getId().compareTo(target) == 0){
+            if (candidateCustomer.getId().compareTo(target) == 0) {
                 System.out.println("Target found");
                 resultArrayList.add(candidateCustomer);
                 break;
-            } else if (candidateCustomer.getPhoneNo().compareTo(target) > 0){
+            } else if (candidateCustomer.getId().compareTo(target) > 0) { // Corrected to compare IDs
                 right = middle - 1;
             } else {
                 left = middle + 1;
             }
         }
-        System.out.println("searchOrderByID() returned");
+
+        System.out.println("searchCustomerByID() returned");
         return resultArrayList;
     }
+
 
     //====================================================================
     // Binary Search Algorithm: By name (diversed to searchByFullName + searchByFirstName)

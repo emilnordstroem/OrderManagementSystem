@@ -4,31 +4,27 @@ import Domain.Models.Order;
 import Storage.OrderStorage;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class OrderSortAlgorithm {
     //====================================================================
     // Sorted arrayList by OrderID : insertion sort
     public static ArrayList<Order> sortedOrderArrayListByID() {
-        ArrayList<Order> orderArrayList = OrderStorage.getORDERS();
-        if(!orderArrayList.isEmpty()) {
-            StopWatch.start();
-            for (int index = 1; index < orderArrayList.size(); index++) {
-                Order candidateOrder = orderArrayList.get(index);
-                int previousElement = index - 1;
-                String previousID = orderArrayList.get(previousElement).getId();
-                while (previousElement >= 0 && previousID.compareTo(candidateOrder.getId()) > 0) {
-                    orderArrayList.set(previousElement + 1, orderArrayList.get(previousElement));
-                    previousElement = previousElement - 1;
-                }
-                orderArrayList.set(previousElement + 1, candidateOrder);
-            }
-            System.out.println("orderArrayList sorted by id and returned");
-            StopWatch.stop();
-            System.out.printf("sortedOrderArrayListByID(): %d miliseconds%n", StopWatch.durationMilliSeconds());
-            return orderArrayList;
+        ArrayList<Order> orderArrayList = new ArrayList<>(OrderStorage.getORDERS()); // Copy to avoid modifying the original
+
+        if (orderArrayList.isEmpty()) {
+            System.out.println("OrderStorage.getORDERS() is empty -> returning empty list");
+            return new ArrayList<>(); // Return empty list instead of null
         }
-        System.out.println("OrderStorage.getORDERS() is empty -> returning null");
-        return null;
+
+        StopWatch.start();
+        orderArrayList.sort(Comparator.comparing(Order::getId)); // Efficient sorting using Java's built-in sort
+        StopWatch.stop();
+
+        System.out.println("orderArrayList sorted by id and returned");
+        System.out.printf("sortedOrderArrayListByID(): %d milliseconds%n", StopWatch.durationMilliSeconds());
+
+        return orderArrayList;
     }
 
     //====================================================================

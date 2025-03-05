@@ -9,6 +9,9 @@ public class OrderSearchAlgorithm {
     // Binary Search Algorithm: OrderID
     public static ArrayList<Order> searchOrderByID(ArrayList<Order> sortedOrderArrayList, String target){
         ArrayList<Order> resultArrayList = new ArrayList<>();
+        for(Order order : sortedOrderArrayList){
+            System.out.println(order.getId());
+        }
         int left = 0;
         int right = sortedOrderArrayList.size();
         while(left <= right){
@@ -25,6 +28,9 @@ public class OrderSearchAlgorithm {
             }
         }
         System.out.println("searchOrderByID() returned");
+        for(Order order : resultArrayList){
+            System.out.println(order.getId());
+        }
         return resultArrayList;
     }
 

@@ -1,11 +1,13 @@
 package View.mainWindow.customerPane;
 
+import Domain.Controller.CustomerController;
 import Domain.Models.*;
 import View.Alert;
 import View.orderDetailsWindow.OrderDetailsWindow;
 import View.utility.StatusComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 public class CustomerDetailsOverview extends GridPane{
     private final Customer selectedCustomer;
     private final ArrayList<TextField> customerDetailsTextFields = new ArrayList<>();
+    private final TextField customerNetSpendingTextField = new TextField();
     private final ComboBox<CustomerStatus> customerStatusComboBox = new ComboBox<>();
     private final ListView<Address> customerAddressListView = new ListView<>();
     private final ListView<Order> customerOrderListView = new ListView<>();
@@ -24,13 +27,13 @@ public class CustomerDetailsOverview extends GridPane{
 
     public CustomerDetailsOverview(Customer chosenCustomer) {
         this.selectedCustomer = chosenCustomer;
-        setElementContents();
+        innerContents();
         setButtonAction();
         setOrderSelectionFunctionality();
         this.setGridLinesVisible(true);
     }
 
-    private void setElementContents(){
+    private void innerContents(){
         setElementLayout();
         setElementContent();
         setCustomerStatusComboBox();
@@ -57,7 +60,8 @@ public class CustomerDetailsOverview extends GridPane{
             detailsOverview.add(labelTextFieldVBox, 0, index);
         }
         detailsOverview.add(new HBox(saveButton, editButton), 0, labelTexts.length);
-        detailsOverview.add(new VBox(new Label("orders"), customerOrderListView), 1,0, 2,10);
+        detailsOverview.add(new VBox(new Label("orders"), customerOrderListView), 1,1, 2,10);
+        detailsOverview.add(new VBox(new Label("net spending"), customerNetSpendingTextField), 1, 0);
 
         this.add(detailsOverview, 0, 0);
     }
@@ -76,6 +80,8 @@ public class CustomerDetailsOverview extends GridPane{
             customerOrderListView.getItems().clear();
             customerOrderListView.getItems().addAll(selectedCustomer.getOrders());
         }
+        customerNetSpendingTextField.setText(String.format("%.2f DKK", CustomerController.getTotalSpending(selectedCustomer)));
+        customerNetSpendingTextField.setEditable(false);
         customerStatusComboBox.setValue(selectedCustomer.getCustomerStatus());
         customerStatusComboBox.setDisable(true);
         for(TextField textField : customerDetailsTextFields){
@@ -125,7 +131,7 @@ public class CustomerDetailsOverview extends GridPane{
 
     private void updateOrderInformation(){
         System.out.println("updateOrderInformation called");
-        setElementContents();
+        innerContents();
     }
 
     private void setOrderSelectionFunctionality(){
